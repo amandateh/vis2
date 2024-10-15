@@ -1,0 +1,81 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Proportional Symbol Map of Low-Carbon Energy Shares by Country (2022)",
+    "width": 770,
+    "height": 400,
+    "projection": { "type": "equalEarth" },
+    "data": {
+      "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
+      "format": { "type": "topojson", "feature": "ne_110m_admin_0_countries" }
+    },
+    "layer": [
+      {
+        "transform": [
+          {
+            "calculate": "'Data is not available in ' + datum.properties.NAME",
+            "as": "note"
+          }
+        ],
+        "mark": { "type": "geoshape", "fill": "lightgray", "stroke": "white" },
+        "encoding": { "tooltip": { "field": "note" } }
+      },
+
+      {
+        "data": {
+          "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/7_others/oceans.topojson",
+          "format": { "type": "topojson", "feature": "oceans" }
+        },
+        "mark": { "type": "geoshape", "fill": "skyblue" }
+      },
+
+      {
+        "data": {
+          "url": "share-electricity-low-carbon.csv"
+        },
+        "transform": [
+          {
+            "lookup": "Country",
+            "from": {
+              "data": {
+                "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/3_choropleth_map/data/countryInfo.csv"
+              },
+              "key": "name",
+              "fields": ["latitude", "longitude"]
+            }
+          }
+        ],
+        "mark": {
+          "type": "circle",
+          "stroke": "black",
+          "strokeWidth": 0.3,
+          "opacity": 0.7
+        },
+        "encoding": {
+          "longitude": { "field": "longitude", "type": "quantitative" },
+          "latitude": { "field": "latitude", "type": "quantitative" },
+          "size": {
+            "field": "Electricity",
+            "title": "Low-Carbon Electricity Share (%)",
+            "type": "quantitative",
+            "scale": { "range": [100, 1000] }
+          },
+          "color": {
+            "field": "Electricity",
+            "type": "quantitative",
+            "title": "Low-Carbon Electricity (%)",
+            "scale": { "scheme": "greens" }
+          },
+          "tooltip": [
+            { "field": "Country", "type": "nominal", "title": "Country" },
+            {
+              "field": "Electricity",
+              "type": "quantitative",
+              "title": "Low-Carbon Electricity (%)",
+              "format": ".2f"
+            }
+          ]
+        }
+      }
+    ]
+  }
+  

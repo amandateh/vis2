@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Import Vega & Vega-Lite -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+    <!-- Import pure.css -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+      integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
+      crossorigin="anonymous"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Change Tab title -->
+    <title>Global Energy Consumption</title>
+    <style>
+      body {
+        font-family: Helvetica Neue, sans-serif;
+      }
+
+      h1 {
+        font-family: Georgia, 'Times New Roman', Times, serif;
+      }
+
+      .radial-section {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        padding: 25px;
+      }
+
+      .radial-section .text-para {
+        width: 55%;
+        padding-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="homepage">
+      <div class="pure-u-1-1" style="text-align: center; margin-top: 50px; background-color: azure; ">
+        <h1 id="map">Global Energy Consumption</h1>
+        <div style="text-align: center;" class="text-1-border">
+          <p>
+            Energy is a fundamental part of modern life, powering everything from homes to industries. 
+            To achieve a more sustainable future where everyone enjoys equal access to clean, reliable energy, it's crucial to first understand the challenges of our current consumption patterns. 
+            This visualization aims to offer insights into global energy use, helping to highlight the areas where change is most needed to ensure a balanced and sustainable energy future for all.
+          </p>
+        </div>
+        <div id="worldmap" style="display: contents; background-color: azure;"></div>
+      </div>
+
+      <div
+        class="pure-g"
+        style="
+          top: 100px;
+          padding: 60px;
+          justify-content: space-around;
+          background-color: white;
+        "
+      >
+        <div class="pure-u-1-3" style="width: 30%">
+          <div class="description description-left">
+              <h2>Primary Energy Consumption per Capita (2022) Across Selected Countries</h2>
+              <p class="text-para">
+                This bar chart shows the Primary Energy Consumption per Capita in 2022 across selected countries.
+                Qatar leads with the highest consumption, followed by Singapore and Canada.
+                Malaysia, highlighted in green, ranks mid-range with about 40,000 kWh per person.
+                Countries like Bangladesh, Pakistan, and Philippines have much lower energy use, highlighting the differences in energy consumption across regions. 
+               <br />
+              </p>
+          </div>
+        </div>
+        <div class="pure-u-2-3" style="text-align: right">
+          <div id="barchart"></div>
+        </div>
+      </div>
+
+      <div class="radial-section">
+        <div id="radialchart"></div>
+        <div class="text-para">
+          <p>
+            These radial graphs display the distribution of <b>primary energy consumption by source</b> for different regions, comparing the <b>World</b> with <b>other coutries/regions</b>.
+            <br><br>
+            In the <b>World</b> view, the energy mix is dominated by <b>Oil</b> and <b>Coal</b>, followed by <b>Hydro</b>, <b>Nuclear</b>, and other renewable sources like <b>Wind</b> and <b>Solar</b>. This indicates the heavy dependence on fossil fuels globally, while renewable sources like <b>Wind</b> and <b>Solar</b> occupy smaller segments, showing their growing but still limited role in the global energy mix.
+            <br><br>
+            In contrast, <b>Malaysia's</b> energy consumption mix also relies significantly on <b>Oil</b> and <b>Coal</b>, but with a notable portion coming from <b>Hydro</b> energy, reflecting the country's investment in hydroelectric power. Smaller portions of energy come from <b>Solar</b> and <b>Other renewables</b>, signaling Malaysia's gradual shift towards cleaner energy sources.
+            <br><br>
+            These visualizations highlight the global reliance on traditional fossil fuels, while showing some movement towards renewable energy in certain regions, with <b>Hydro</b> standing out as a key renewable in Malaysia's energy landscape.
+          </p>
+        </div>
+      </div>
+
+      <br />
+
+      <div
+        class="pure-g"
+        style="
+          top: 100px;
+          padding: 60px;
+          justify-content: space-around;
+          background-color: azure;
+        "
+      >
+        <div class="pure-u-1-3" style="width: 30%;background-color: azure; ">
+          <div class="description description-left">
+              <h2>Advancing Toward Sustainable Energy Solutions</h2>
+            <p class = "text-para">
+                This Proportional Symbol Map highlights the varying adoption rates of low-carbon electricity across countries in 2022. 
+                Countries with larger circles, like those in Europe and parts of South America, show higher percentages of low-carbon electricity in their energy mix, while smaller circles represent lower adoption rates. 
+                Malaysia, with a share of 19.04%, lags behind many regions, signaling the need for greater investment in cleaner energy solutions to reduce reliance on fossil fuels and support a sustainable future.
+            </p>
+          </div>
+        </div>
+        <div class="pure-u-2-3" style="text-align: right">
+          <div id="conclusion"></div>
+        </div>
+      </div>
+      <br />
+
+      <div
+        style="
+          text-align: center;
+          padding: 10px;
+          background-color: black;
+          color: white;
+        "
+      >
+        <h5>Visualisation by Amanda Teh Ru-En 33930406</h5>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      var graph1 = "choroplethmap.json";
+      var graph2 = "barchart.json";
+      var graph3 = "energybysource.json";
+      var graph4 = "conclusion.json";
+
+      vegaEmbed("#worldmap", graph1, { actions: false })
+        .then(function (result) {
+          
+        })
+        .catch(console.error);
+
+      vegaEmbed("#barchart", graph2, { actions: false })
+        .then(function (result) {
+          
+        })
+        .catch(console.error);
+
+      vegaEmbed("#radialchart", graph3, { actions: false })
+        .then(function (result) {
+          
+        })
+        .catch(console.error);
+
+      vegaEmbed("#conclusion", graph4, { actions: false })
+        .then(function (result) {
+          
+        })
+        .catch(console.error);
+    </script>
+
+ 
+  </body>
+</html>

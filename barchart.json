@@ -1,0 +1,46 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 800,
+    "height": 400,
+    "title": "Primary Energy Consumption per Capita (2022)",
+    "data": {
+      "url": "energy-use-per-person-vs-gdp-per-capita-2022.csv",
+      "format": { "type": "csv" }
+    },
+    "transform": [
+      {
+        "filter": "datum['Entity'] == 'United States' || datum['Entity'] == 'Qatar' || datum['Entity'] == 'China' || datum['Entity'] == 'Malaysia' || datum['Entity'] == 'Australia' || datum['Entity'] == 'Bangladesh' || datum['Entity'] == 'Brazil' || datum['Entity'] == 'Indonesia' || datum['Entity'] == 'Canada' || datum['Entity'] == 'Argentina' || datum['Entity'] == 'Croatia' || datum['Entity'] == 'Egypt' || datum['Entity'] == 'France' || datum['Entity'] == 'Germany' || datum['Entity'] == 'Hong Kong' || datum['Entity'] == 'India' || datum['Entity'] == 'Mexico' || datum['Entity'] == 'Pakistan' || datum['Entity'] == 'Philippines' || datum['Entity'] == 'Romania' || datum['Entity'] == 'Singapore' || datum['Entity'] == 'South Korea' || datum['Entity'] == 'Spain' || datum['Entity'] == 'Finland' || datum['Entity'] == 'Sweden' || datum['Entity'] == 'Thailand' || datum['Entity'] == 'United Kingdom' || datum['Entity'] == 'Vietnam'"
+      }
+    ],
+    "mark": "bar",
+    "encoding": {
+      "x": {
+        "field": "Entity",
+        "type": "nominal",
+        "title": "Country",
+        "sort": "-y",
+        "axis": {
+          "labelAngle": -45,
+          "labelFontSize": 11
+        }
+      },
+      "y": {
+        "field": "Primary energy consumption per capita (kWh/person)",
+        "type": "quantitative",
+        "title": "Primary Energy Consumption (kWh/person)"
+      },
+      "color": {
+        "condition": {
+          "test": "datum['Entity'] == 'Malaysia'",
+          "value": "green"
+        },
+        "value": "steelblue"
+      },
+      "tooltip": [
+        { "field": "Entity", "type": "nominal", "title": "Country" },
+        { "field": "GDP per capita, PPP (constant 2017 international $)", "type": "quantitative", "title": "GDP per capita" },
+        { "field": "Primary energy consumption per capita (kWh/person)", "type": "quantitative", "title": "Energy Consumption (kWh/person)" }
+      ]
+    }
+  }
+  
